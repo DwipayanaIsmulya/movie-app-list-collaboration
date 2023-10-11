@@ -1,0 +1,11 @@
+.navbar {
+    background: transparent;
+    display: flex;
+    position: fixed;
+    top: 0;
+    z-index: 999;
+}
+
+.navbar-active{
+    background: rgb(255, 255, 255);
+}
