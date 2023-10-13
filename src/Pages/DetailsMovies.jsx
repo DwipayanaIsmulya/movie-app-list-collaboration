@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Spinner, Container } from "react-bootstrap";
-import Jumbotron from "../Components/DetailsMovie.jsx/Jumbotron";
+import Jumbotron from "../Components/DetailsMovie/Jumbotron";
 
 function DetailsMovies() {
   const [detailsMovies, setDetailsMovies] = useState([]);
