@@ -1,4 +1,5 @@
 import PropType from "prop-types";
+import axios from "axios";
 import { useState } from "react";
 import { BsPlayCircle } from "react-icons/bs";
 import { Container, Card, Overlay, Button, Modal } from "react-bootstrap";
@@ -12,16 +13,51 @@ function Jumbotron({
   overview,
   vote_average,
   imageURL,
-  trailerKey,
 }) {
+  const [errors, setErrors] = useState({
+    isError: false,
+    message: null,
+  });
   const [showTrailer, setShowTrailer] = useState(false);
+  const [trailerKey, setTrailerKey] = useState(null);
 
-  // Fungsi untuk membuka modal trailer
-  const openTrailerModal = () => {
-    setShowTrailer(true);
+  const openTrailerModal = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/3/movie/${id}/videos`,
+        {
+          headers: {
+            Authorization: `Bearer ${import.meta.env.VITE_API_AUTH_TOKEN}`,
+          },
+        }
+      );
+      const { data } = response;
+
+      if (data.results.length > 0) {
+        setTrailerKey(data.results[0].key);
+        setShowTrailer(true);
+      } else {
+        setShowTrailer(false);
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        setErrors({
+          ...errors,
+          isError: true,
+          message: error?.response?.data?.status_message || error?.message,
+        });
+        return;
+      }
+
+      alert(error?.message);
+      setErrors({
+        ...errors,
+        isError: true,
+        message: error?.message,
+      });
+    }
   };
 
-  // Fungsi untuk menutup modal trailer
   const closeTrailerModal = () => {
     setShowTrailer(false);
   };
@@ -54,7 +90,7 @@ function Jumbotron({
                 variant="danger"
                 className="rounded-pill"
                 size="lg"
-                onClick={openTrailerModal}
+                onClick={() => openTrailerModal()}
               >
                 <BsPlayCircle className="me-2" />
                 <b>WATCH NOW</b>
@@ -96,7 +132,6 @@ Jumbotron.propTypes = {
   overview: PropType.string.isRequired,
   vote_average: PropType.number.isRequired,
   imageURL: PropType.string.isRequired,
-  trailerKey: PropType.string,
 };
 
 export default Jumbotron;

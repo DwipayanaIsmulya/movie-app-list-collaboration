@@ -23,12 +23,6 @@ function DetailsMovies() {
             headers: {
               Authorization: `Bearer ${import.meta.env.VITE_API_AUTH_TOKEN}`,
             },
-          },
-          {
-            params: {
-              language: "en-US",
-              append_to_response: "videos",
-            },
           }
         );
         const { data } = response;
@@ -89,7 +83,7 @@ function DetailsMovies() {
               overview={movie?.overview}
               vote_average={movie?.vote_average}
               release_date={movie?.release_date}
-              trailerKey={movie?.videos?.results[0]?.key}
+              // trailerKey={movie?.videos?.results[0]?.key}
             />
           </>
         ))}
