@@ -7,11 +7,7 @@ function MovieCard({ id, title, imageURL }) {
   return (
     <>
       <Container fluid="0" className="my-3">
-        <Card
-          as={Link}
-          to={`/details/${id}/${title}`}
-          className={styles["card"]}
-        >
+        <Card as={Link} to={`/details/${id}/${title}`} className={styles["card"]}>
           <Card.Img src={imageURL} />
         </Card>
       </Container>

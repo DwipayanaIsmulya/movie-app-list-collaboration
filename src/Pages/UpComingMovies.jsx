@@ -53,9 +53,7 @@ function UpComingMovies() {
       const params = { page: 1 };
       try {
         const response = await axios.get(
-          `${
-            import.meta.env.VITE_API_BASE_URL
-          }3/movie/upcoming?language=en-US&page=1`,
+          `${import.meta.env.VITE_API_BASE_URL}3/movie/upcoming?language=en-US&page=1`,
           {
             headers: {
               Authorization: `Bearer ${import.meta.env.VITE_API_AUTH_TOKEN}`,
@@ -110,15 +108,8 @@ function UpComingMovies() {
           <Col>
             <h2 style={{ fontWeight: 800 }}>Up Coming Movies</h2>
           </Col>
-          <Col
-            xs={1}
-            md={2}
-            className="d-flex justify-content-end align-items-center"
-          >
-            <Link
-              to="/all-movie"
-              style={{ textDecoration: "none", color: "red" }}
-            >
+          <Col xs={1} md={2} className="d-flex justify-content-end align-items-center">
+            <Link to="/all-movie" style={{ textDecoration: "none", color: "red" }}>
               See All Movies {<BsArrowRight />}
             </Link>
           </Col>

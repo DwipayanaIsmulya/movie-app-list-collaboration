@@ -1,12 +1,4 @@
-import {
-  Container,
-  Navbar,
-  Nav,
-  Offcanvas,
-  Form,
-  InputGroup,
-  Button,
-} from "react-bootstrap";
+import { Container, Navbar, Nav, Offcanvas, Form, InputGroup, Button } from "react-bootstrap";
 import { BsSearch } from "react-icons/bs";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -98,11 +90,7 @@ function Header() {
                   >
                     Login
                   </Button>
-                  <Button
-                    variant="danger"
-                    className="rounded-pill"
-                    style={{ width: "100%" }}
-                  >
+                  <Button variant="danger" className="rounded-pill" style={{ width: "100%" }}>
                     Register
                   </Button>
                 </div>
