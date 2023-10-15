@@ -47,6 +47,7 @@ function PopularMovie() {
       },
     },
   };
+  //API SEMENTARA UNTUK MENAMPILKAN POPULAR MOVIE
   const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwibmFtZSI6IkZhaG1pIEFsZmFyZXphIiwiZW1haWwiOiJmYWxmYXJlemExQGJpbmFyYWNhZGVteS5vcmciLCJpYXQiOjE2OTMxODEzMTV9.ki5wCImtVV7qOhzZHf5A4RuxcU7XcAdMQ5QLVTe_6zY";
   // Simpan token di local storage
