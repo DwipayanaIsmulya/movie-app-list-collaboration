@@ -60,7 +60,7 @@ function Footer() {
                 textAlign: "end",
               }}
             >
-              @ Copyrigth Ariantika 2023
+              @ Copyrigth by Ariantika X Team 4 2023
             </p>
           </Col>
         </Row>

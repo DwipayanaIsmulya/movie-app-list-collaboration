@@ -4,7 +4,7 @@ import { BsPlayCircle } from "react-icons/bs";
 import { Spinner, Carousel, Button, Container, Image, Modal } from "react-bootstrap";
 import styles from "./home1.module.css";
 
-function HeroSlider() {
+const HeroSlider = () => {
   const [nowPlayingMovie, setNowPlayingMovie] = useState([]);
   const [errors, setErrors] = useState({
     isError: false,
@@ -16,29 +16,34 @@ function HeroSlider() {
 
   useEffect(() => {
     const getNowPlayingMovies = async () => {
-      const params = { page: 1 };
       try {
+        // Get token from local storage
+        const token = localStorage.getItem("token");
+        if (!token) return;
+
         const response = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL}3/movie/now_playing`,
+          `${import.meta.env.VITE_API_BASE_URL}/api/v1/movie/popular`,
           {
             headers: {
-              Authorization: `Bearer ${import.meta.env.VITE_API_AUTH_TOKEN}`,
+              Authorization: `Bearer ${token}`,
             },
-          },
-          { params }
+          }
         );
-        const { data } = response;
+        const { data } = response.data;
+        // console.log(data)
 
-        console.log(data?.results.slice(12, 15));
-        setNowPlayingMovie(data?.results.slice(12, 15));
+        //perulangan untuk menampilkan 3 data di main section
+        const popular = data.slice(7, 11);
+
+        setNowPlayingMovie(popular);
+        setErrors({ ...errors, isError: false });
       } catch (error) {
         if (axios.isAxiosError(error)) {
           setErrors({
             ...errors,
             isError: true,
-            message: error?.response?.data?.status_message || error?.message,
+            message: error?.response?.data?.message || error?.message,
           });
-          return;
         }
 
         alert(error?.message);
@@ -49,7 +54,6 @@ function HeroSlider() {
         });
       }
     };
-
     getNowPlayingMovies();
   }, [errors]);
 
@@ -57,25 +61,43 @@ function HeroSlider() {
     setSelectedMovie(movie);
 
     try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
       const response = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/3/movie/${movie.id}/videos`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/v1/movie/${movie.id}`, // Ubah URL sesuai kebutuhan
         {
           headers: {
-            Authorization: `Bearer ${import.meta.env.VITE_API_AUTH_TOKEN}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
       const { data } = response;
+      console.log(response);
 
-      if (data.results.length > 0) {
-        setTrailerKey(data.results[0].key);
+      if (data.length > 0) {
+        setTrailerKey(data[0].key);
         setShowTrailer(true);
       } else {
         setShowTrailer(false);
       }
+
+      console.log(data[0].key);
     } catch (error) {
-      console.error(error);
-      setShowTrailer(false);
+      if (axios.isAxiosError(error)) {
+        setErrors({
+          ...errors,
+          isError: true,
+          message: error?.response?.data?.message || error?.message,
+        });
+      } else {
+        alert(error?.message);
+        setErrors({
+          ...errors,
+          isError: true,
+          message: error?.message,
+        });
+      }
     }
   };
 
@@ -147,6 +169,6 @@ function HeroSlider() {
       </Container>
     </>
   );
-}
+};
 
 export default HeroSlider;
