@@ -8,6 +8,7 @@ import Login from "./Pages/Login";
 import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import MyProfile from "./Pages/MyProfile";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               element={<DetailsMovies />}
             />
             <Route path="/search" element={<SearchMovies />} />
+            <Route path="/myprofile" element={<MyProfile />} />
 
             {/* Authentication */}
             <Route path="/login" element={<Login />}></Route>
