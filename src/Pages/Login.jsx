@@ -66,7 +66,6 @@ const Login = () => {
         <Card className={styles["card"]}>
           <Card.Body>
             <Form onSubmit={login}>
-              
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label className="d-flex justify-content-center">
                   <h3 style={{ fontWeight: "800" }}>Sign In</h3>
@@ -87,7 +86,18 @@ const Login = () => {
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
                 />
-                {errors && <Alert variant="danger" style={{fontSize: "14px", marginTop: "10px", padding: "10px"}}>{errors}!</Alert>}
+                {errors && (
+                  <Alert
+                    variant="danger"
+                    style={{
+                      fontSize: "14px",
+                      marginTop: "10px",
+                      padding: "10px",
+                    }}
+                  >
+                    {errors}!
+                  </Alert>
+                )}
               </Form.Group>
               <Form.Group className="mt-1" controlId="formBasicCheckbox">
                 <Row>
@@ -146,7 +156,7 @@ const Login = () => {
                 New to Movielist?
               </span>
               <Link
-                to="/registrasi"
+                to="/register"
                 style={{
                   textDecoration: "none",
                   color: "#000",

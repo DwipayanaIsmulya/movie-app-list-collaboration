@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import Particle from "../Components/Particles/Particle";
 import { Form, Button, Container, Card } from "react-bootstrap";
-import styles from "../Components/GoogleLogin/styles.module.css";
+import styles from "../Components/Login/styles.module.css";
 import { Link } from "react-router-dom";
 
 const Register = () => {
