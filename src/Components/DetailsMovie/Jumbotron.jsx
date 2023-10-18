@@ -20,7 +20,7 @@ function Jumbotron({ id, title, release_date, genres, overview, vote_average, im
       // If the token is not exist in the local storage
       if (!token) return;
       const response = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/movie/${id}/videos`,
+        `${import.meta.env.VITE_API_AUTH_URL}/api/v1/movie/${id}/videos`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

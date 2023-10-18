@@ -18,7 +18,7 @@ function PopularMovie() {
     loop: true,
     autoplay: true,
     autoplayTimeout: 4000,
-    dots: false,
+    dots: true,
     nav: false,
     // navText: ["next", "prev"],
     controlsClass: "owl-controls",
