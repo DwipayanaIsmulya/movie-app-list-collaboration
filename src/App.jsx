@@ -52,22 +52,6 @@ import Footer from "./Components/Footer/Footer";
 // import { useState, useEffect } from "react";
 
 function App() {
-  // const [token, setToken] = useState(null);
-
-  // useEffect(() => {
-  //   // Mengambil token dari local storage
-  //   const storedToken = localStorage.getItem("token");
-  //   if (storedToken) {
-  //     setToken(storedToken);
-  //   } else {
-  //     // Jika token tidak tersedia di local storage, Anda bisa set token default di sini.
-  //     // Ini hanya contoh, Anda mungkin ingin menangani ini secara berbeda.
-  //     setToken(
-  //       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwibmFtZSI6IkZhaG1pIEFsZmFyZXphIiwiZW1haWwiOiJmYWxmYXJlemExQGJpbmFyYWNhZGVteS5vcmciLCJpYXQiOjE2OTMxODEzMTV9.ki5wCImtVV7qOhzZHf5A4RuxcU7XcAdMQ5QLVTe_6zY"
-  //     );
-  //   }
-  // }, []);
-
   return (
     <>
       <BrowserRouter>
