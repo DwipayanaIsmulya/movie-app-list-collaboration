@@ -8,6 +8,7 @@ import Login from "./Pages/Login";
 import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import Register from "./Pages/Register";
 
 function App() {
   return (
@@ -28,7 +29,8 @@ function App() {
             <Route path="/search" element={<SearchMovies />} />
 
             {/* Authentication */}
-            <Route path="/login" element={<Login />}></Route>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
 
             {/* The page for not found url path */}
             <Route
