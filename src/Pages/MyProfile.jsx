@@ -142,10 +142,10 @@ function MyProfile() {
                         readOnly
                       />
                     </Form.Group>
-                    <Form.Text>Phone</Form.Text>
+                    <Form.Text>Phone Number</Form.Text>
                     <Form.Control
                       type="text"
-                      placeholder=""
+                      placeholder="628123456789"
                       aria-label="Disabled input example"
                       disabled
                       readOnly

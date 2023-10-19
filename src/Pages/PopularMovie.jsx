@@ -47,11 +47,6 @@ function PopularMovie() {
       },
     },
   };
-  //API SEMENTARA UNTUK MENAMPILKAN POPULAR MOVIE
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwibmFtZSI6IkZhaG1pIEFsZmFyZXphIiwiZW1haWwiOiJmYWxmYXJlemExQGJpbmFyYWNhZGVteS5vcmciLCJpYXQiOjE2OTMxODEzMTV9.ki5wCImtVV7qOhzZHf5A4RuxcU7XcAdMQ5QLVTe_6zY";
-  // Simpan token di local storage
-  localStorage.setItem("token", token);
 
   useEffect(() => {
     const getPopularMovies = async () => {
@@ -115,7 +110,9 @@ function PopularMovie() {
       <Container fluid className="mt-5">
         <Row>
           <Col>
-            <h2 style={{ fontWeight: 800, marginTop: "50px" }}>Popular Movies</h2>
+            <h2 style={{ fontWeight: 800, marginTop: "50px" }}>
+              Popular Movies
+            </h2>
           </Col>
           <Col className="d-flex justify-content-end align-items-end">
             <Link

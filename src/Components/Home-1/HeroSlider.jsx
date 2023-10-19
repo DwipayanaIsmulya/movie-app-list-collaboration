@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { BsPlayCircle } from "react-icons/bs";
-import { Spinner, Carousel, Button, Container, Image, Modal } from "react-bootstrap";
+import {
+  Spinner,
+  Carousel,
+  Button,
+  Container,
+  Image,
+  Modal,
+} from "react-bootstrap";
 import styles from "./home1.module.css";
 
 const HeroSlider = () => {
@@ -65,7 +72,7 @@ const HeroSlider = () => {
       if (!token) return;
 
       const response = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/movie/${movie.id}`, // Ubah URL sesuai kebutuhan
+        `${import.meta.env.VITE_API_BASE_URL}/api/v1/movie/${movie.id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -128,7 +135,9 @@ const HeroSlider = () => {
             <Carousel.Item key={movie.id}>
               <div className={styles["img-backdrop"]}>
                 <Image
-                  src={`${import.meta.env.VITE_API_IMG_URL}${movie?.backdrop_path}`}
+                  src={`${import.meta.env.VITE_API_IMG_URL}${
+                    movie?.backdrop_path
+                  }`}
                   style={{ width: "100%" }}
                 />
               </div>
