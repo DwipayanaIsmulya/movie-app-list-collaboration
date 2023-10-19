@@ -74,7 +74,10 @@ const DetailsMovies = () => {
           <Jumbotron
             key={detailsMovies.id}
             id={detailsMovies.id}
-            imageURL={import.meta.env.VITE_API_IMG_URL + detailsMovies?.backdrop_path}
+            imageURL={
+              import.meta.env.VITE_API_IMG_BACKDROP_URL +
+              detailsMovies?.backdrop_path
+            }
             title={detailsMovies?.title}
             genres={detailsMovies.genres?.map((genre) => (
               <p key={genre.id} className="d-inline pe-1">

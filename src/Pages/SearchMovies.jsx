@@ -22,10 +22,13 @@ const SearchMovies = () => {
         // Get token from local storage
         const token = localStorage.getItem("token");
         if (!token) return;
+        if (!query) return;
 
         // Get the data from API with query and page variable
         const response = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL}/api/v1/search/movie?page=${page}&query=${query}`,
+          `${
+            import.meta.env.VITE_API_BASE_URL
+          }/api/v1/search/movie?page=${page}&query=${query}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -76,7 +79,9 @@ const SearchMovies = () => {
       <Container fluid className="p-3" style={{ marginTop: "80px" }}>
         <Row>
           <Col>
-            <h3>Result for <span>{searchParams.get("query")}</span></h3>
+            <h3>
+              Result for <span>{searchParams.get("query")}</span>
+            </h3>
           </Col>
         </Row>
         <Row>
@@ -84,7 +89,9 @@ const SearchMovies = () => {
             <Col key={search.id}>
               <MovieCard
                 id={search.id}
-                imageURL={import.meta.env.VITE_API_IMG_URL + search?.poster_path}
+                imageURL={
+                  import.meta.env.VITE_API_IMG_URL + search?.poster_path
+                }
                 overview={search?.overview}
                 title={search?.title}
               />
