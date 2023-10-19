@@ -2,21 +2,27 @@ import { useState } from "react";
 import axios from "axios";
 import { FcGoogle } from "react-icons/fc";
 import { BsFacebook } from "react-icons/bs";
-import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
-import GoogleLogin from "../Components/GoogleLogin/GoogleLogin";
+import {
+  Button,
+  Card,
+  Col,
+  Container,
+  Form,
+  Navbar,
+  Row,
+  Alert,
+} from "react-bootstrap";
+import GoogleLogin from "../Components/Login/GoogleLogin";
 import Particle from "../Components/Particles/Particle";
-import styles from "../Components/GoogleLogin/styles.module.css";
+import styles from "../Components/Login/styles.module.css";
 import { Link } from "react-router-dom";
-// import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  // const navigate = useNavigate();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState(null);
 
   const login = async (event) => {
-    // Prevent default is to prevent the default behavior
     event.preventDefault();
 
     try {
@@ -33,31 +39,35 @@ const Login = () => {
       // Save our token
       localStorage.setItem("token", token);
 
-      // Redirect to home
-      // navigate("/");
-
       // Redirect to home or reload the home
-      // This is temporary solution, the better solution is using redux
+      // This is a temporary solution, the better solution is using redux
       window.location.replace("/");
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        alert(error?.response?.data?.message);
+        setErrors(error?.response?.data?.message);
         return;
       }
 
-      alert(error?.message);
+      setErrors(error?.message);
     }
   };
 
   return (
     <>
       <Particle />
+      <Navbar fixed="top">
+        <Container fluid>
+          <Navbar.Brand>
+            <h1 style={{ color: "	#c1071e", fontWeight: "800" }}>MOVIELIST</h1>
+          </Navbar.Brand>
+        </Container>
+      </Navbar>
       <Container className="d-flex justify-content-center align-items-center vh-100">
         <Card className={styles["card"]}>
           <Card.Body>
-            <Form onSubmit={login} className="mb-4">
+            <Form onSubmit={login}>
               <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>
+                <Form.Label className="d-flex justify-content-center">
                   <h3 style={{ fontWeight: "800" }}>Sign In</h3>
                 </Form.Label>
                 <Form.Control
@@ -68,7 +78,7 @@ const Login = () => {
                   onChange={(event) => setEmail(event.target.value)}
                 />
               </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Group className="mb-2" controlId="formBasicPassword">
                 <Form.Control
                   type="password"
                   placeholder="Enter Password"
@@ -76,15 +86,19 @@ const Login = () => {
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
                 />
+                {errors && (
+                  <Alert
+                    variant="danger"
+                    style={{
+                      fontSize: "14px",
+                      marginTop: "10px",
+                      padding: "10px",
+                    }}
+                  >
+                    {errors}!
+                  </Alert>
+                )}
               </Form.Group>
-              <Button
-                variant="danger"
-                type="submit"
-                style={{ width: "100%" }}
-                className="mt-2"
-              >
-                Sign In
-              </Button>
               <Form.Group className="mt-1" controlId="formBasicCheckbox">
                 <Row>
                   <Col>
@@ -94,6 +108,7 @@ const Login = () => {
                       style={{
                         fontSize: "14px",
                         marginTop: "3px",
+                        color: "GrayText",
                       }}
                     />
                   </Col>
@@ -109,17 +124,48 @@ const Login = () => {
                     </Form.Text>
                   </Col>
                 </Row>
-                <hr />
               </Form.Group>
+              <Button
+                variant="danger"
+                type="submit"
+                style={{ width: "100%", height: "45px" }}
+                className="mt-2"
+              >
+                Sign In
+              </Button>
             </Form>
+            <p className="text-center my-2">OR</p>
             <div className="mb-3">
               <GoogleLogin buttonText={<FcGoogle fontSize="18px" />} />
             </div>
             <div>
-              <Button variant="primary" style={{ width: "100%" }}>
+              <Button
+                style={{
+                  width: "100%",
+                  height: "45px",
+                  backgroundColor: "#3b5998",
+                }}
+              >
                 {<BsFacebook color="#fff" fontSize="17px" />} Sign in with
                 FaceBook
               </Button>
+            </div>
+            <hr />
+            <div className="d-flex justify-content-center">
+              <span style={{ fontSize: "15px", color: "GrayText" }}>
+                New to Movielist?
+              </span>
+              <Link
+                to="/register"
+                style={{
+                  textDecoration: "none",
+                  color: "#000",
+                  fontSize: "14px",
+                  paddingLeft: "4px",
+                }}
+              >
+                Sign up now
+              </Link>
             </div>
           </Card.Body>
         </Card>
