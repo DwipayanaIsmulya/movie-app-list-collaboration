@@ -1,4 +1,3 @@
-
 import {
   Container,
   Navbar,
@@ -45,7 +44,7 @@ function Header() {
 
     // Redirect to home or reload the home
     // This is temporary solution, the better solution is using redux
-    window.location.replace("/");
+    window.location.replace("/login");
   };
 
   useEffect(() => {
@@ -54,14 +53,11 @@ function Header() {
         const token = localStorage.getItem("token");
         if (!token) return;
 
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_AUTH_URL}/api/v1/auth/me`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axios.get(`${import.meta.env.VITE_API_AUTH_URL}/api/v1/auth/me`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         const { data } = response.data;
 
@@ -88,15 +84,17 @@ function Header() {
 
   return (
     <>
+      {/* {user && ( */}
       <Navbar
         expand="md"
         className={navbar ? styles["navbar-active"] : styles["navbar"]}
         fixed="top"
       >
-        <Container fluid>
+        <Container fluid className="mx-4">
           <Navbar.Brand href="/">
             <h1 style={{ color: "	#c1071e", fontWeight: "800" }}>MOVIELIST</h1>
           </Navbar.Brand>
+
           <Navbar.Toggle aria-controls={`offcanvasNavbar-expand`} />
           <Navbar.Offcanvas
             id={`offcanvasNavbar-expand`}
@@ -120,7 +118,7 @@ function Header() {
             </Offcanvas.Header>
             <Offcanvas.Body>
               <Nav className="justify-content-center flex-grow-1">
-                <Form onSubmit={handleSearch} style={{ width: "50%" }}>
+                <Form onSubmit={handleSearch} className="d-flex w-75">
                   <InputGroup>
                     <Form.Control
                       type="text"
@@ -141,67 +139,48 @@ function Header() {
                   </InputGroup>
                 </Form>
               </Nav>
-              <br />
-              <Nav className="justify-content-center pe-2">
-                <div className="d-flex">
-
+              <Nav>
+                {user ? (
+                  <>
+                    <NavDropdown
+                      title={
+                        user ? (
+                          <>
+                            <BsPersonCircle className="me-1" style={{ fontSize: "20px" }} />
+                            {user.name}
+                          </>
+                        ) : (
+                          <BsPersonCircle className="me-2" />
+                        )
+                      }
+                      menuVariant="dark"
+                    >
+                      <NavDropdown.Item as={Link} to="/myprofile">
+                        My Profile
+                      </NavDropdown.Item>
+                      <NavDropdown.Divider />
+                      <NavDropdown.Item as={Button} onClick={logout}>
+                        Sign Out
+                      </NavDropdown.Item>
+                    </NavDropdown>
+                  </>
+                ) : (
                   <Button
+                    as={Link}
+                    to="/login"
                     variant="outline-danger"
                     className="me-3 rounded-pill"
                     style={{ width: "100%" }}
                   >
-                    Login
+                    Sign In
                   </Button>
-                  <Button variant="danger" className="rounded-pill" style={{ width: "100%" }}>
-                    Register
-                  </Button>
-
-                  {user ? (
-                    <>
-                      <NavDropdown
-                        title={
-                          user ? (
-                            <>
-                              <BsPersonCircle
-                                className="me-1"
-                                style={{ fontSize: "20px" }}
-                              />{" "}
-                              {user.name}
-                            </>
-                          ) : (
-                            <BsPersonCircle className="me-2" />
-                          )
-                        }
-                        menuVariant="dark"
-                        style={{ width: "100%" }}
-                      >
-                        <NavDropdown.Item as={Link} to="/myprofile">
-                          My Profile
-                        </NavDropdown.Item>
-                        <NavDropdown.Divider />
-                        <NavDropdown.Item as={Link} onClick={logout}>
-                          Logout
-                        </NavDropdown.Item>
-                      </NavDropdown>
-                    </>
-                  ) : (
-                    <Button
-                      as={Link}
-                      to="/login"
-                      variant="outline-danger"
-                      className="me-3 rounded-pill"
-                      style={{ width: "100%" }}
-                    >
-                      Login
-                    </Button>
-                  )}
-
-                </div>
+                )}
               </Nav>
             </Offcanvas.Body>
           </Navbar.Offcanvas>
         </Container>
       </Navbar>
+      {/* )} */}
     </>
   );
 }

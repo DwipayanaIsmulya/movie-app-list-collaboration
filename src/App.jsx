@@ -48,11 +48,12 @@ import AllMovies from "./Pages/AllMovies";
 import DetailsMovies from "./Pages/DetailsMovies";
 import SearchMovies from "./Pages/SearchMovies";
 import Login from "./Pages/Login";
+import Register from "./Pages/Register";
+import MyProfile from "./Pages/MyProfile";
 import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
 
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import Register from "./Pages/Register";
 
 function App() {
   return (
@@ -66,6 +67,7 @@ function App() {
             <Route path="all-movie" element={<AllMovies />} />
             <Route path="/details/:movieId/:movieTitle" element={<DetailsMovies />} />
             <Route path="/search" element={<SearchMovies />} />
+            <Route path="/myprofile" element={<MyProfile />} />
 
             {/* Authentication */}
             <Route path="/login" element={<Login />} />

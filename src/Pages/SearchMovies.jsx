@@ -76,7 +76,7 @@ const SearchMovies = () => {
       <Container fluid className="p-3" style={{ marginTop: "80px" }}>
         <Row>
           <Col>
-            <h3>Search Result for "{searchParams.get("query")}"</h3>
+            <h3>Result for <span>{searchParams.get("query")}</span></h3>
           </Col>
         </Row>
         <Row>
