@@ -1,46 +1,3 @@
-// import { BrowserRouter, Routes, Route } from "react-router-dom";
-// import HomePage from "./Pages/HomePage";
-// import PopularMovie from "./Pages/PopularMovie";
-// import AllMovies from "./Pages/AllMovies";
-// import DetailsMovies from "./Pages/DetailsMovies";
-// import SearchMovies from "./Pages/SearchMovies";
-// import Header from "./Components/Header/Header";
-// import Footer from "./Components/Footer/Footer";
-
-// function App() {
-
-//   return (
-//     <>
-//       <BrowserRouter>
-//         <Header />
-//         <Routes>
-//           <Route path="/" element={<HomePage />} />
-//           <Route path="popular-movie" element={<PopularMovie />} />
-//           <Route path="all-movie" element={<AllMovies />} />
-//           <Route
-//             path="/details/:movieId/:movieTitle"
-//             element={<DetailsMovies />}
-//           />
-//           <Route path="/search" element={<SearchMovies />} />
-
-//           {/* The page for not found url path */}
-//           <Route
-//             path="*"
-//             element={
-//               <h1 className="d-flex flex-row justify-content-center align-items-center vh-100">
-//                 404 Page Not Found
-//               </h1>
-//             }
-//           />
-//         </Routes>
-//         <Footer />
-//       </BrowserRouter>
-//     </>
-//   );
-// }
-
-// export default App;
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./Pages/HomePage";
 import PopularMovie from "./Pages/PopularMovie";
@@ -52,26 +9,85 @@ import Register from "./Pages/Register";
 import MyProfile from "./Pages/MyProfile";
 import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
-
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import Protected from "./Components/Protected/Protected";
+import NoAccessToken from "./Components/Protected/NoAccessToken";
 
 function App() {
   return (
     <>
-      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID}>
+      <GoogleOAuthProvider
+        clientId={import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID}
+      >
         <BrowserRouter>
           <Header />
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="popular-movie" element={<PopularMovie />} />
-            <Route path="all-movie" element={<AllMovies />} />
-            <Route path="/details/:movieId/:movieTitle" element={<DetailsMovies />} />
-            <Route path="/search" element={<SearchMovies />} />
-            <Route path="/myprofile" element={<MyProfile />} />
+            <Route
+              path="/"
+              element={
+                <Protected>
+                  <HomePage />
+                </Protected>
+              }
+            />
+            <Route
+              path="popular-movie"
+              element={
+                <Protected>
+                  <PopularMovie />
+                </Protected>
+              }
+            />
+            <Route
+              path="all-movie"
+              element={
+                <Protected>
+                  <AllMovies />
+                </Protected>
+              }
+            />
+            <Route
+              path="/details/:movieId/:movieTitle"
+              element={
+                <Protected>
+                  <DetailsMovies />
+                </Protected>
+              }
+            />
+            <Route
+              path="/search"
+              element={
+                <Protected>
+                  <SearchMovies />
+                </Protected>
+              }
+            />
+            <Route
+              path="/myprofile"
+              element={
+                <Protected>
+                  <MyProfile />
+                </Protected>
+              }
+            />
 
             {/* Authentication */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            <Route
+              path="/login"
+              element={
+                <NoAccessToken>
+                  <Login />
+                </NoAccessToken>
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <NoAccessToken>
+                  <Register />
+                </NoAccessToken>
+              }
+            />
 
             {/* The page for not found url path */}
             <Route

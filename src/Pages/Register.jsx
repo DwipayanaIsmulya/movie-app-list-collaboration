@@ -91,7 +91,15 @@ const Register = () => {
                 />
               </Form.Group>
               <hr className="my-1" />
-              <Link className={"links text-danger"} as={Link} to="/login">
+              <Link
+                as={Link}
+                to="/login"
+                style={{
+                  textDecoration: "none",
+                  color: "red",
+                  fontSize: "0.8rem",
+                }}
+              >
                 Have Already Account ?
               </Link>
               <Button
