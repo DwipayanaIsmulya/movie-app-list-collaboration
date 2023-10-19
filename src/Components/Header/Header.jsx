@@ -10,6 +10,7 @@ import {
 } from "react-bootstrap";
 import { BsSearch, BsPersonCircle } from "react-icons/bs";
 import { useState, useEffect } from "react";
+
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import styles from "./navbar.module.css";
@@ -43,7 +44,7 @@ function Header() {
 
     // Redirect to home or reload the home
     // This is temporary solution, the better solution is using redux
-    window.location.replace("/");
+    window.location.replace("/login");
   };
 
   useEffect(() => {
@@ -52,14 +53,11 @@ function Header() {
         const token = localStorage.getItem("token");
         if (!token) return;
 
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_AUTH_URL}/api/v1/auth/me`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axios.get(`${import.meta.env.VITE_API_AUTH_URL}/api/v1/auth/me`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         const { data } = response.data;
 
@@ -148,10 +146,7 @@ function Header() {
                       title={
                         user ? (
                           <>
-                            <BsPersonCircle
-                              className="me-1"
-                              style={{ fontSize: "20px" }}
-                            />
+                            <BsPersonCircle className="me-1" style={{ fontSize: "20px" }} />
                             {user.name}
                           </>
                         ) : (
@@ -164,7 +159,7 @@ function Header() {
                         My Profile
                       </NavDropdown.Item>
                       <NavDropdown.Divider />
-                      <NavDropdown.Item as={Link} onClick={logout}>
+                      <NavDropdown.Item as={Button} onClick={logout}>
                         Sign Out
                       </NavDropdown.Item>
                     </NavDropdown>

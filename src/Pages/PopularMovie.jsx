@@ -47,30 +47,39 @@ function PopularMovie() {
       },
     },
   };
+  //API SEMENTARA UNTUK MENAMPILKAN POPULAR MOVIE
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwibmFtZSI6IkZhaG1pIEFsZmFyZXphIiwiZW1haWwiOiJmYWxmYXJlemExQGJpbmFyYWNhZGVteS5vcmciLCJpYXQiOjE2OTMxODEzMTV9.ki5wCImtVV7qOhzZHf5A4RuxcU7XcAdMQ5QLVTe_6zY";
+  // Simpan token di local storage
+  localStorage.setItem("token", token);
 
   useEffect(() => {
     const getPopularMovies = async () => {
-      const params = { page: 1 };
       try {
+        // Get token from local storage
+        const token = localStorage.getItem("token");
+
+        // If the token is not exist in the local storage
+        if (!token) return;
+
         const response = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL}3/movie/popular`,
+          `${import.meta.env.VITE_API_BASE_URL}/api/v1/movie/popular`,
           {
             headers: {
-              Authorization: `Bearer ${import.meta.env.VITE_API_AUTH_TOKEN}`,
+              Authorization: `Bearer ${token}`,
             },
-          },
-          { params }
+          }
         );
-        const { data } = response;
+        const { data } = response.data;
 
-        console.log(data?.results.slice(0, 9));
-        setPopularMovies(data?.results.slice(0, 9));
+        setPopularMovies(data);
+        setErrors({ ...errors, isError: false });
       } catch (error) {
         if (axios.isAxiosError(error)) {
           setErrors({
             ...errors,
             isError: true,
-            message: error?.response?.data?.status_message || error?.message,
+            message: error?.response?.data?.message || error?.message,
           });
           return;
         }
@@ -85,7 +94,7 @@ function PopularMovie() {
     };
 
     getPopularMovies();
-  }, [errors]);
+  }, []);
 
   if (errors.isError) {
     return <h1>{errors.message}</h1>;
@@ -106,9 +115,7 @@ function PopularMovie() {
       <Container fluid className="mt-5">
         <Row>
           <Col>
-            <h2 style={{ fontWeight: 800, marginTop: "50px" }}>
-              Popular Movies
-            </h2>
+            <h2 style={{ fontWeight: 800, marginTop: "50px" }}>Popular Movies</h2>
           </Col>
           <Col className="d-flex justify-content-end align-items-end">
             <Link

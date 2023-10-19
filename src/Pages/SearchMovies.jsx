@@ -6,48 +6,46 @@ import { Container, Row, Col } from "react-bootstrap";
 import MovieCard from "../Components/Home-2/MovieCard";
 
 const SearchMovies = () => {
-  // Create state for movies that have been searched
+  const [searchParams] = useSearchParams();
   const [movies, setMovies] = useState([]);
   const [errors, setErrors] = useState({
     isError: false,
     message: null,
   });
-  const [searchParams] = useSearchParams();
+
+  const query = searchParams.get("query");
+  let page = searchParams.get("page");
 
   useEffect(() => {
-    const getSearchMovies = async () => {
+    const getSearchMovie = async (page = 1) => {
       try {
-        const query = searchParams.get("query");
-        // const page = searchParams.get("page");
+        // Get token from local storage
+        const token = localStorage.getItem("token");
+        if (!token) return;
 
         // Get the data from API with query and page variable
         const response = await axios.get(
-          `${
-            import.meta.env.VITE_API_BASE_URL
-          }3/search/movie?query=${query}&page=1&include_adult=false&language=en-US`,
+          `${import.meta.env.VITE_API_BASE_URL}/api/v1/search/movie?page=${page}&query=${query}`,
           {
             headers: {
-              Authorization: `Bearer ${import.meta.env.VITE_API_AUTH_TOKEN}`,
+              Authorization: `Bearer ${token}`,
             },
           }
         );
 
-        const { data } = response;
-
-        // Set state for the movie that have been searched
+        // Set state for the movies that have been searched
+        const { data } = response.data;
         console.log(data);
-        setMovies(data.results);
+        setMovies(data);
       } catch (error) {
         if (axios.isAxiosError(error)) {
           setErrors({
             ...errors,
             isError: true,
-            message: error?.response?.data?.status_message || error?.message,
+            message: error?.response?.data?.message || error?.message,
           });
           return;
         }
-
-        alert(error?.message);
         setErrors({
           ...errors,
           isError: true,
@@ -55,9 +53,10 @@ const SearchMovies = () => {
         });
       }
     };
+    getSearchMovie();
+  }, [query, page]);
 
-    getSearchMovies();
-  }, [errors, searchParams]);
+  console.log(movies);
 
   if (errors.isError) {
     return <h1>{errors.message}</h1>;
@@ -81,13 +80,13 @@ const SearchMovies = () => {
           </Col>
         </Row>
         <Row>
-          {movies.map((movie) => (
-            <Col key={movie.id}>
+          {movies.map((search) => (
+            <Col key={search.id}>
               <MovieCard
-                id={movie.id}
-                imageURL={import.meta.env.VITE_API_IMG_URL + movie?.poster_path}
-                overview={movie?.overview}
-                title={movie?.title}
+                id={search.id}
+                imageURL={import.meta.env.VITE_API_IMG_URL + search?.poster_path}
+                overview={search?.overview}
+                title={search?.title}
               />
             </Col>
           ))}

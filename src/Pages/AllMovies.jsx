@@ -5,7 +5,7 @@ import { BsArrowDown } from "react-icons/bs";
 import { Spinner, Container, Row, Col } from "react-bootstrap";
 import MovieCard from "../Components/Home-2/MovieCard";
 
-function AllMovies() {
+const AllMovies = () => {
   const [allMovies, setAllMovies] = useState([]);
   const [errors, setErrors] = useState({
     isError: false,
@@ -13,30 +13,33 @@ function AllMovies() {
   });
 
   useEffect(() => {
-    const getAllMovies = async () => {
-      const params = { page: 1 };
+    const getAllMovie = async () => {
       try {
+        // Get token from local storage
+        const token = localStorage.getItem("token");
+
+        // If the token is not exist in the local storage
+        if (!token) return;
+
         const response = await axios.get(
-          `${
-            import.meta.env.VITE_API_BASE_URL
-          }3/movie/popular?language=en-US&page=1`,
+          `${import.meta.env.VITE_API_BASE_URL}/api/v1/movie/popular`,
           {
             headers: {
-              Authorization: `Bearer ${import.meta.env.VITE_API_AUTH_TOKEN}`,
+              Authorization: `Bearer ${token}`,
             },
-          },
-          { params }
+          }
         );
-        const { data } = response;
+        const { data } = response.data;
+        console.log(data);
 
-        console.log(data?.results);
-        setAllMovies(data?.results);
+        setAllMovies(data);
+        setErrors({ ...errors, isError: false });
       } catch (error) {
         if (axios.isAxiosError(error)) {
           setErrors({
             ...errors,
             isError: true,
-            message: error?.response?.data?.status_message || error?.message,
+            message: error?.response?.data?.message || error?.message,
           });
           return;
         }
@@ -50,8 +53,8 @@ function AllMovies() {
       }
     };
 
-    getAllMovies();
-  }, [errors]);
+    getAllMovie();
+  }, []);
 
   if (errors.isError) {
     return <h1>{errors.message}</h1>;
@@ -86,6 +89,6 @@ function AllMovies() {
       </Container>
     </>
   );
-}
+};
 
 export default AllMovies;
