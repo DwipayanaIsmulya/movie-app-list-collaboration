@@ -59,7 +59,7 @@ const Register = () => {
           <Card.Body>
             <Form onSubmit={onSubmit} className="mb-4">
               <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>
+                <Form.Label className="d-flex justify-content-center">
                   <h3 style={{ fontWeight: "800" }}>Sign Up</h3>
                 </Form.Label>
                 <Form.Control
@@ -90,26 +90,32 @@ const Register = () => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </Form.Group>
-              <hr className="my-1" />
-              <Link
-                as={Link}
-                to="/login"
-                style={{
-                  textDecoration: "none",
-                  color: "red",
-                  fontSize: "0.8rem",
-                }}
-              >
-                Have Already Account ?
-              </Link>
               <Button
                 variant="danger"
                 type="submit"
                 style={{ width: "100%" }}
-                className="mt-2"
+                className="mb-3"
               >
                 Sign Up
               </Button>
+              <hr className="my-1" />
+              <div className="d-flex justify-content-center my-3 ">
+                <span style={{ fontSize: "15px", color: "GrayText" }}>
+                  Have Already Account?
+                </span>
+                <Link
+                  as={Link}
+                  to="/login"
+                  style={{
+                    textDecoration: "none",
+                    color: "#dc3545",
+                    fontSize: "14px",
+                    paddingLeft: "4px",
+                  }}
+                >
+                  Sign In now
+                </Link>
+              </div>
             </Form>
           </Card.Body>
         </Card>

@@ -14,6 +14,16 @@ import { Link } from "react-router-dom";
 function MyProfile() {
   const [user, setUser] = useState(null);
 
+  const logout = (event) => {
+    event.preventDefault();
+
+    localStorage.removeItem("token");
+
+    // Redirect to home or reload the home
+    // This is temporary solution, the better solution is using redux
+    window.location.replace("/login");
+  };
+
   useEffect(() => {
     const getMe = async () => {
       try {
@@ -69,9 +79,10 @@ function MyProfile() {
                     color: "grey",
                     fontSize: "14px",
                     textAlign: "center",
+                    margin: "3px",
                   }}
                 >
-                  <BsCollectionPlay className="me-1" size="20px" />
+                  <BsCollectionPlay className="mx-2" size="20px" />
                   Member since October 2023
                 </p>
                 <Col className="d-flex justify-content-center align-items-center">
@@ -79,6 +90,7 @@ function MyProfile() {
                     style={{
                       color: "grey",
                       fontSize: "14px",
+                      margin: "0 5px",
                     }}
                   >
                     Connect with
@@ -97,7 +109,7 @@ function MyProfile() {
                   <Button
                     variant="danger"
                     as={Link}
-                    to="/login"
+                    onClick={logout}
                     className="w-50"
                   >
                     <BiLogOut className="me-1" />

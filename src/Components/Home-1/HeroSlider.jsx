@@ -79,17 +79,18 @@ const HeroSlider = () => {
           },
         }
       );
-      const { data } = response;
-      console.log(response);
+      const { data } = response.data;
+      console.log(data);
 
-      if (data.length > 0) {
-        setTrailerKey(data[0].key);
+      if (data) {
+        setTrailerKey(data.videos[0].key);
         setShowTrailer(true);
+        console.log(data.videos[0].key);
       } else {
         setShowTrailer(false);
       }
 
-      console.log(data[0].key);
+      // console.log(data[0].data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         setErrors({
@@ -135,7 +136,7 @@ const HeroSlider = () => {
             <Carousel.Item key={movie.id}>
               <div className={styles["img-backdrop"]}>
                 <Image
-                  src={`${import.meta.env.VITE_API_IMG_URL}${
+                  src={`${import.meta.env.VITE_API_IMG_BACKDROP_URL}${
                     movie?.backdrop_path
                   }`}
                   style={{ width: "100%" }}

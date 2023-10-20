@@ -5,7 +5,15 @@ import { BsPlayCircle } from "react-icons/bs";
 import { Container, Card, Overlay, Button, Modal } from "react-bootstrap";
 import styles from "./style.module.css";
 
-function Jumbotron({ id, title, release_date, genres, overview, vote_average, imageURL }) {
+function Jumbotron({
+  id,
+  title,
+  release_date,
+  genres,
+  overview,
+  vote_average,
+  imageURL,
+}) {
   const [errors, setErrors] = useState({
     isError: false,
     message: null,
@@ -20,18 +28,20 @@ function Jumbotron({ id, title, release_date, genres, overview, vote_average, im
       // If the token is not exist in the local storage
       if (!token) return;
       const response = await axios.get(
-        `${import.meta.env.VITE_API_AUTH_URL}/api/v1/movie/${id}/videos`,
+        `${import.meta.env.VITE_API_AUTH_URL}/api/v1/movie/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-      const { data } = response;
+      const { data } = response.data;
+      console.log(data);
 
-      if (data.results.length > 0) {
-        setTrailerKey(data.results[0].key);
+      if (data) {
+        setTrailerKey(data.videos[0].key);
         setShowTrailer(true);
+        console.log(data.videos[0].key);
       } else {
         setShowTrailer(false);
       }
@@ -64,7 +74,11 @@ function Jumbotron({ id, title, release_date, genres, overview, vote_average, im
         <Card className={styles["img-backdrop"]}>
           <Card.Img src={imageURL} alt={id} />
 
-          <Overlay show={true} target={(ref) => ref && ref.parentElement} placement="top">
+          <Overlay
+            show={true}
+            target={(ref) => ref && ref.parentElement}
+            placement="top"
+          >
             <div className={styles["content"]}>
               <h1>{title}</h1>
               Genre: <b>{genres}</b>
@@ -87,7 +101,12 @@ function Jumbotron({ id, title, release_date, genres, overview, vote_average, im
                 <BsPlayCircle className="me-2" />
                 <b>WATCH NOW</b>
               </Button>
-              <Modal show={showTrailer} onHide={closeTrailerModal} size="lg" centered>
+              <Modal
+                show={showTrailer}
+                onHide={closeTrailerModal}
+                size="lg"
+                centered
+              >
                 <Modal.Header closeButton>
                   <Modal.Title>{title}</Modal.Title>
                 </Modal.Header>

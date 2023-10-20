@@ -56,11 +56,11 @@ const Login = () => {
     <>
       <Particle />
       <Navbar fixed="top">
-        <Container fluid>
+        {/* <Container fluid>
           <Navbar.Brand>
             <h1 style={{ color: "	#c1071e", fontWeight: "800" }}>MOVIELIST</h1>
           </Navbar.Brand>
-        </Container>
+        </Container> */}
       </Navbar>
       <Container className="d-flex justify-content-center align-items-center vh-100">
         <Card className={styles["card"]}>
@@ -159,7 +159,7 @@ const Login = () => {
                 to="/register"
                 style={{
                   textDecoration: "none",
-                  color: "#000",
+                  color: "#dc3545",
                   fontSize: "14px",
                   paddingLeft: "4px",
                 }}
