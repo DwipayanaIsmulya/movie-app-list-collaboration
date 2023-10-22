@@ -30,7 +30,6 @@ const AllMovies = () => {
           }
         );
         const { data } = response.data;
-        console.log(data);
 
         setAllMovies(data);
         setErrors({ ...errors, isError: false });
