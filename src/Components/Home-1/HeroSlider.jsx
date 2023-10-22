@@ -37,7 +37,6 @@ const HeroSlider = () => {
           }
         );
         const { data } = response.data;
-        // console.log(data)
 
         //perulangan untuk menampilkan 3 data di main section
         const popular = data.slice(7, 11);
@@ -80,17 +79,13 @@ const HeroSlider = () => {
         }
       );
       const { data } = response.data;
-      console.log(data);
 
       if (data) {
         setTrailerKey(data.videos[0].key);
         setShowTrailer(true);
-        console.log(data.videos[0].key);
       } else {
         setShowTrailer(false);
       }
-
-      // console.log(data[0].data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         setErrors({
