@@ -1,5 +1,4 @@
 import { useState } from "react";
-import axios from "axios";
 import { FcGoogle } from "react-icons/fc";
 import { BsFacebook } from "react-icons/bs";
 import {
@@ -14,41 +13,22 @@ import {
 import GoogleLogin from "../Components/Login/GoogleLogin";
 import Particle from "../Components/Particles/Particle";
 import styles from "../Components/Login/styles.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { login } from "../redux/actions/authActions";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState(null);
 
-  const login = async (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
 
-    try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_AUTH_URL}/api/v1/auth/login`,
-        {
-          email,
-          password,
-        }
-      );
-      const { data } = response.data;
-      const { token } = data;
-
-      // Save our token
-      localStorage.setItem("token", token);
-
-      // Redirect to home or reload the home
-      // This is a temporary solution, the better solution is using redux
-      window.location.replace("/");
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        setErrors(error?.response?.data?.message);
-        return;
-      }
-
-      setErrors(error?.message);
-    }
+    dispatch(login(email, password, navigate, setErrors, errors));
   };
 
   return (
@@ -75,7 +55,7 @@ const Login = () => {
             </Col>
             <Col>
               <Card.Body className="border border-2 rounded">
-                <Form onSubmit={login}>
+                <Form onSubmit={onSubmit}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label className="d-flex justify-content-center">
                       <h3 style={{ fontWeight: "800" }}>Sign In</h3>

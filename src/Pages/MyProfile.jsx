@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Form, Card, Col, Container, Row, Button } from "react-bootstrap";
 import { BsCollectionPlay, BsPencilSquare } from "react-icons/bs";
 import {
@@ -9,58 +9,25 @@ import {
   FaTwitter,
 } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { getMe, logout } from "../redux/actions/authActions";
 
 function MyProfile() {
-  const [user, setUser] = useState(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const logout = (event) => {
-    event.preventDefault();
+  const { user, token } = useSelector((state) => state.auth);
 
-    localStorage.removeItem("token");
-
-    // Redirect to home or reload the home
-    // This is temporary solution, the better solution is using redux
-    window.location.replace("/login");
+  const onlogout = () => {
+    dispatch(logout());
+    navigate("/login");
   };
 
   useEffect(() => {
-    const getMe = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        if (!token) return;
-
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_AUTH_URL}/api/v1/auth/me`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        const { data } = response.data;
-
-        // Set the user state from API data
-        setUser(data);
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          // If token is not valid
-          if (error.response.status === 401) {
-            localStorage.removeItem("token");
-            return;
-          }
-
-          alert(error?.response?.data?.message);
-          return;
-        }
-
-        alert(error?.message);
-      }
-    };
-
-    getMe();
-  }, []);
+    if (token) {
+      dispatch(getMe(navigate, null, "/login"));
+    }
+  }, [dispatch, navigate, token]);
 
   return (
     <>
@@ -106,12 +73,7 @@ function MyProfile() {
                   </Button>
                 </Col>
                 <Col className="my-3 d-flex justify-content-center">
-                  <Button
-                    variant="danger"
-                    as={Link}
-                    onClick={logout}
-                    className="w-50"
-                  >
+                  <Button variant="danger" onClick={onlogout} className="w-50">
                     <BiLogOut className="me-1" />
                     Sign Out
                   </Button>
