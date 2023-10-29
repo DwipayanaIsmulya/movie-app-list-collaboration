@@ -25,12 +25,10 @@ function Jumbotron({ id, title, release_date, genres, overview, vote_average, im
         },
       });
       const { data } = response.data;
-      console.log(data);
 
       if (data) {
         setTrailerKey(data.videos[0].key);
         setShowTrailer(true);
-        console.log(data.videos[0].key);
       } else {
         setShowTrailer(false);
       }

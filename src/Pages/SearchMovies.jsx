@@ -38,7 +38,6 @@ const SearchMovies = () => {
 
         // Set state for the movies that have been searched
         const { data } = response.data;
-        console.log(data);
         setMovies(data);
       } catch (error) {
         if (axios.isAxiosError(error)) {
@@ -58,8 +57,6 @@ const SearchMovies = () => {
     };
     getSearchMovie();
   }, [query, page]);
-
-  console.log(movies);
 
   if (errors.isError) {
     return <h1>{errors.message}</h1>;
