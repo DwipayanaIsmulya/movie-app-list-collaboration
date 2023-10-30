@@ -10,58 +10,26 @@ import {
   Modal,
 } from "react-bootstrap";
 import styles from "./home1.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { heroMovieSlider } from "../../redux/actions/heroActions";
 
 const HeroSlider = () => {
-  const [nowPlayingMovie, setNowPlayingMovie] = useState([]);
+  const dispatch = useDispatch();
+
+  const { hero } = useSelector((state) => state.hero);
+
   const [errors, setErrors] = useState({
     isError: false,
     message: null,
   });
+  
   const [showTrailer, setShowTrailer] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [trailerKey, setTrailerKey] = useState(null);
 
   useEffect(() => {
-    const getNowPlayingMovies = async () => {
-      try {
-        // Get token from local storage
-        const token = localStorage.getItem("token");
-        if (!token) return;
-
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL}/api/v1/movie/popular`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        const { data } = response.data;
-
-        //perulangan untuk menampilkan 3 data di main section
-        const popular = data.slice(7, 11);
-
-        setNowPlayingMovie(popular);
-        setErrors({ ...errors, isError: false });
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          setErrors({
-            ...errors,
-            isError: true,
-            message: error?.response?.data?.message || error?.message,
-          });
-        }
-
-        alert(error?.message);
-        setErrors({
-          ...errors,
-          isError: true,
-          message: error?.message,
-        });
-      }
-    };
-    getNowPlayingMovies();
-  }, [errors]);
+    dispatch(heroMovieSlider(setErrors, errors));
+  }, []);
 
   const openTrailerModal = async (movie) => {
     setSelectedMovie(movie);
@@ -113,7 +81,7 @@ const HeroSlider = () => {
     return <h1>{errors.message}</h1>;
   }
 
-  if (nowPlayingMovie.length === 0) {
+  if (hero.length === 0) {
     return (
       <div className="d-flex flex-row justify-content-center align-items-center vh-100">
         <Spinner animation="border" role="status">
@@ -127,7 +95,7 @@ const HeroSlider = () => {
     <>
       <Container fluid="0">
         <Carousel controls={false} interval={4000}>
-          {nowPlayingMovie.map((movie) => (
+          {hero.map((movie) => (
             <Carousel.Item key={movie.id}>
               <div className={styles["img-backdrop"]}>
                 <Image

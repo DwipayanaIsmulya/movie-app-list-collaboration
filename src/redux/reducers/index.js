@@ -4,6 +4,7 @@ import movieReducer from "./movieReducer";
 import detailReducer from "./detailReducer";
 import allMovieReducer from "./allMovieReducer";
 import searchReducer from "./searchReducer";
+import heroReducer from "./heroReducer";
 
 // It will be make the reducers to be one temporary state database
 // Reducer is like table in database
@@ -14,4 +15,5 @@ export default combineReducers({
   detail: detailReducer,
   seeAll: allMovieReducer,
   searchM: searchReducer,
+  hero: heroReducer,
 });
