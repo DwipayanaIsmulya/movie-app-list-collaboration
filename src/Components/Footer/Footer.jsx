@@ -1,49 +1,21 @@
 import { Container, Row, Col } from "react-bootstrap";
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getMe } from "../../redux/actions/authActions";
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
 
 function Footer() {
-  const [user, setUser] = useState(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { user, token } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    const getMe = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        if (!token) return;
-
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_AUTH_URL}/api/v1/auth/me`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        const { data } = response.data;
-
-        // Set the user state from API data
-        setUser(data);
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          // If token is not valid
-          if (error.response.status === 401) {
-            localStorage.removeItem("token");
-            return;
-          }
-
-          alert(error?.response?.data?.message);
-          return;
-        }
-
-        alert(error?.message);
-      }
-    };
-
-    getMe();
-  }, []);
+    if (token) {
+      dispatch(getMe(navigate, null, "/login"));
+    }
+  }, [dispatch, navigate, token]);
 
   return (
     <>
