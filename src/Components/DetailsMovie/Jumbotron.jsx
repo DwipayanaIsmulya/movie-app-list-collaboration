@@ -98,7 +98,6 @@ function Jumbotron({ id, title, release_date, genres, overview, vote_average, im
                     title="Movie Trailer"
                   ></iframe>
                 </Modal.Body>
-                <Modal.Footer></Modal.Footer>
               </Modal>
             </div>
           </Overlay>

@@ -1,7 +1,7 @@
 import axios from "axios";
-import { setPopular } from "../reducers/movieReducer";
+import { setAllMovie } from "../reducers/allMovieReducer";
 
-export const getPopularMovies = (setErrors, errors) => async (dispatch, getState) => {
+export const getAllMovie = (setErrors, errors) => async (dispatch, getState) => {
   try {
     const { token } = getState().auth;
     if (!token) return;
@@ -13,7 +13,7 @@ export const getPopularMovies = (setErrors, errors) => async (dispatch, getState
     });
     const { data } = response.data;
 
-    dispatch(setPopular(data));
+    dispatch(setAllMovie(data));
     setErrors({ ...errors, isError: false });
   } catch (error) {
     if (axios.isAxiosError(error)) {

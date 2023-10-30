@@ -6,5 +6,5 @@ import thunk from "redux-thunk";
 export default configureStore({
   reducer: rootReducers,
   devTools: import.meta.env.MODE === "development",
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk), // redux thunk
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
 });

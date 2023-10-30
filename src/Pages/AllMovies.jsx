@@ -1,65 +1,30 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { BsArrowDown } from "react-icons/bs";
 import { Spinner, Container, Row, Col } from "react-bootstrap";
 import MovieCard from "../Components/Home-2/MovieCard";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllMovie } from "../redux/actions/allMovieActions";
 
 const AllMovies = () => {
-  const [allMovies, setAllMovies] = useState([]);
+  const dispatch = useDispatch();
+
+  const { allMovie } = useSelector((state) => state.seeAll);
+
   const [errors, setErrors] = useState({
     isError: false,
     message: null,
   });
 
   useEffect(() => {
-    const getAllMovie = async () => {
-      try {
-        // Get token from local storage
-        const token = localStorage.getItem("token");
-
-        // If the token is not exist in the local storage
-        if (!token) return;
-
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL}/api/v1/movie/popular`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        const { data } = response.data;
-
-        setAllMovies(data);
-        setErrors({ ...errors, isError: false });
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          setErrors({
-            ...errors,
-            isError: true,
-            message: error?.response?.data?.message || error?.message,
-          });
-          return;
-        }
-
-        alert(error?.message);
-        setErrors({
-          ...errors,
-          isError: true,
-          message: error?.message,
-        });
-      }
-    };
-
-    getAllMovie();
-  }, []);
+    dispatch(getAllMovie(setErrors, errors));
+  }, [dispatch, errors]);
 
   if (errors.isError) {
     return <h1>{errors.message}</h1>;
   }
 
-  if (allMovies.length === 0) {
+  if (allMovie.length === 0) {
     return (
       <div className="d-flex flex-row justify-content-center align-items-center vh-100">
         <Spinner animation="border" role="status">
@@ -76,7 +41,7 @@ const AllMovies = () => {
           See All Movies {<BsArrowDown />}
         </Link>
         <Row>
-          {allMovies.map((movie) => (
+          {allMovie.map((movie) => (
             <Col key={movie.id}>
               <MovieCard
                 id={movie.id}
