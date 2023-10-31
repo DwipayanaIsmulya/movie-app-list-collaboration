@@ -73,7 +73,13 @@ const Register = () => {
               </Card.Body>
             </Col>
             <Col>
-              <Card.Body className="border border-2 rounded">
+              <Card.Body
+                className="border border-2 rounded"
+                style={{
+                  boxShadow:
+                    "0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05)",
+                }}
+              >
                 <Form onSubmit={onSubmit} className="mb-4">
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label className="d-flex justify-content-center">

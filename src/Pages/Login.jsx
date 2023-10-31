@@ -8,7 +8,8 @@ import {
   Container,
   Form,
   Row,
-  Alert,
+  Toast,
+  ToastContainer,
 } from "react-bootstrap";
 import GoogleLogin from "../Components/Login/GoogleLogin";
 import Particle from "../Components/Particles/Particle";
@@ -23,17 +24,33 @@ const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState(null);
+  const [errors, setErrors] = useState({
+    isError: false,
+    message: null,
+  });
+  const [showToast, setShowToast] = useState(false);
 
   const onSubmit = async (event) => {
     event.preventDefault();
 
     dispatch(login(email, password, navigate, setErrors, errors));
+    setShowToast(true);
   };
 
   return (
     <>
       <Particle />
+      <ToastContainer position="top-end">
+        <Toast
+          show={showToast}
+          onClose={() => setShowToast(false)}
+          delay={4500}
+          autohide
+          bg="warning"
+        >
+          <Toast.Body>{errors.message}!</Toast.Body>
+        </Toast>
+      </ToastContainer>
       <Container className="d-flex justify-content-center align-items-center vh-100">
         <Card className={styles["card"]}>
           <Row className="d-flex justify-content-center align-items-center">
@@ -54,7 +71,13 @@ const Login = () => {
               </Card.Body>
             </Col>
             <Col>
-              <Card.Body className="border border-2 rounded">
+              <Card.Body
+                className="border border-2 rounded"
+                style={{
+                  boxShadow:
+                    "0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05)",
+                }}
+              >
                 <Form onSubmit={onSubmit}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label className="d-flex justify-content-center">
@@ -76,18 +99,6 @@ const Login = () => {
                       value={password}
                       onChange={(event) => setPassword(event.target.value)}
                     />
-                    {errors && (
-                      <Alert
-                        variant="danger"
-                        style={{
-                          fontSize: "14px",
-                          marginTop: "10px",
-                          padding: "10px",
-                        }}
-                      >
-                        {errors}!
-                      </Alert>
-                    )}
                   </Form.Group>
                   <Form.Group className="mt-1" controlId="formBasicCheckbox">
                     <Row>
