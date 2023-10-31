@@ -18,7 +18,7 @@ const AllMovies = () => {
 
   useEffect(() => {
     dispatch(getAllMovie(setErrors, errors));
-  }, [dispatch, errors]);
+  }, []);
 
   if (errors.isError) {
     return <h1>{errors.message}</h1>;
@@ -46,6 +46,7 @@ const AllMovies = () => {
               <MovieCard
                 id={movie.id}
                 imageURL={import.meta.env.VITE_API_IMG_URL + movie?.poster_path}
+                // title={movie.title}
               />
             </Col>
           ))}

@@ -22,8 +22,8 @@ export const getAllMovie = (setErrors, errors) => async (dispatch, getState) => 
         isError: true,
         message: error?.response?.data?.message || error?.message,
       });
-      return;
     }
+
     alert(error?.message);
     setErrors({
       ...errors,

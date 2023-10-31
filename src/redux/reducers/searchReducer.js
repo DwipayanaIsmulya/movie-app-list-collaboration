@@ -5,7 +5,7 @@ const initialState = {
 };
 
 const movieSlice = createSlice({
-  name: "searchM",
+  name: "search",
   initialState,
   reducers: {
     setSearch: (state, action) => {

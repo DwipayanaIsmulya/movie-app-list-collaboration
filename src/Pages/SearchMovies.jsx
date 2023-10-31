@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import MovieCard from "../Components/Home-2/MovieCard";
@@ -7,30 +7,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { getSearchMovies } from "../redux/actions/searchActions";
 
 const SearchMovies = () => {
-  const dispatch = useDispatch();
-
-  const { search } = useSelector((state) => state.searchM);
-
-  // const [errors, setErrors] = useState({
-  //   isError: false,
-  //   message: null,
-  // });
-
   const [searchParams] = useSearchParams();
 
   const query = searchParams.get("query");
   let page = searchParams.get("page");
 
-  useEffect(() => {
-    dispatch(getSearchMovies(query, page));
-    return () => {
-      dispatch(search([]));
-    };
-  }, [dispatch,query, page]);
+  const dispatch = useDispatch();
 
-  // if (errors.isError) {
-  //   return <h1>{errors.message}</h1>;
-  // }
+  const { search } = useSelector((state) => state.search);
+
+  const [errors, setErrors] = useState({
+    isError: false,
+    message: null,
+  });
+
+  useEffect(() => {
+    dispatch(getSearchMovies(setErrors, errors, query, page));
+  }, [dispatch, errors, query, page, searchParams]);
 
   if (search.length === 0) {
     return (
@@ -40,7 +33,7 @@ const SearchMovies = () => {
     );
   }
 
-  console.log(search);
+  // console.log(search);
   // Foreach or map every object of movies array
   return (
     <>

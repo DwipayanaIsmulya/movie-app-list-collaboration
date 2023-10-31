@@ -17,6 +17,7 @@ export const getSearchMovies =
         }
       );
       const { data } = response.data;
+
       dispatch(setSearch(data));
       setErrors({ ...errors, isError: false });
     } catch (error) {
@@ -26,8 +27,9 @@ export const getSearchMovies =
           isError: true,
           message: error?.response?.data?.message || error?.message,
         });
-        return;
       }
+
+      alert(error?.message);
       setErrors({
         ...errors,
         isError: true,

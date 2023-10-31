@@ -54,7 +54,7 @@ function PopularMovie() {
 
   useEffect(() => {
     dispatch(getPopularMovies(setErrors, errors));
-  }, [dispatch, errors]);
+  }, []);
 
   if (errors.isError) {
     return <h1>{errors.message}</h1>;

@@ -7,8 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDetailsMovie } from "../redux/actions/detailActions";
 
 const DetailsMovies = () => {
-  // const [detailsMovies, setDetailsMovies] = useState();
-
   const dispatch = useDispatch();
 
   const { details } = useSelector((state) => state.detail);
@@ -17,6 +15,7 @@ const DetailsMovies = () => {
     isError: false,
     message: null,
   });
+
   const { movieId } = useParams();
 
   useEffect(() => {

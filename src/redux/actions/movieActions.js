@@ -1,7 +1,8 @@
 import axios from "axios";
+import { isAxiosError } from "axios";
 import { setPopular } from "../reducers/movieReducer";
 
-export const getPopularMovies = (setErrors, errors) => async (dispatch, getState) => {
+export const getPopularMovies = () => async (dispatch, getState) => {
   try {
     const { token } = getState().auth;
     if (!token) return;
@@ -14,21 +15,12 @@ export const getPopularMovies = (setErrors, errors) => async (dispatch, getState
     const { data } = response.data;
 
     dispatch(setPopular(data));
-    setErrors({ ...errors, isError: false });
+    
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      setErrors({
-        ...errors,
-        isError: true,
-        message: error?.response?.data?.message || error?.message,
-      });
+    if (isAxiosError(error)) {
+      alert(error?.response?.data?.message);
       return;
     }
     alert(error?.message);
-    setErrors({
-      ...errors,
-      isError: true,
-      message: error?.message,
-    });
   }
 };
