@@ -1,52 +1,27 @@
 import { useState } from "react";
-import axios from "axios";
 import Particle from "../Components/Particles/Particle";
 import { Form, Button, Container, Card, Row, Col } from "react-bootstrap";
 import styles from "../Components/Login/styles.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { register } from "../redux/actions/authActions";
 
 const Register = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
+  const [errors, setErrors] = useState(null);
 
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      let data = JSON.stringify({
-        name,
-        email,
-        password,
-      });
-
-      let config = {
-        method: "post",
-        url: `${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/register`,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: data,
-      };
-
-      const response = await axios.request(config);
-      const { token } = response.data.data;
-
-      localStorage.setItem("token", token);
-
-      // navigate("/");
-
-      // Temporary solution
-      window.location.href = "/";
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        alert(error?.response?.data?.message);
-        return;
-      }
-      alert(error?.message);
-    }
+    dispatch(
+      register(name, email, password, password2, navigate, setErrors, errors)
+    );
   };
 
   return (
@@ -111,6 +86,15 @@ const Register = () => {
                       style={{ height: "45px" }}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Control
+                      type="password"
+                      placeholder="Re-Type Password"
+                      style={{ height: "45px" }}
+                      value={password2}
+                      onChange={(e) => setPassword2(e.target.value)}
                     />
                   </Form.Group>
                   <Button
