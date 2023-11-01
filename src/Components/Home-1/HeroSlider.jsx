@@ -22,6 +22,7 @@ const HeroSlider = () => {
     isError: false,
     message: null,
   });
+  
   const [showTrailer, setShowTrailer] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [trailerKey, setTrailerKey] = useState(null);
