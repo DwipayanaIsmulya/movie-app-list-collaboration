@@ -114,10 +114,7 @@ function Header() {
                         title={
                           user ? (
                             <>
-                              <BsPersonCircle
-                                className="me-1"
-                                style={{ fontSize: "20px" }}
-                              />
+                              <BsPersonCircle className="me-1" style={{ fontSize: "20px" }} />
                               {user.name}
                             </>
                           ) : (
