@@ -32,9 +32,14 @@ function MyProfile() {
   return (
     <>
       <Container className="d-flex justify-content-center align-items-center vh-100">
-        <Card className="w-100">
-          <hr />
-          <Card.Body>
+        <Card
+          className="w-100"
+          style={{
+            boxShadow:
+              "0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05)",
+          }}
+        >
+          <Card.Body className="p-4">
             <Row>
               <Col>
                 <p className="text-center">
@@ -132,7 +137,6 @@ function MyProfile() {
               </Col>
             </Row>
           </Card.Body>
-          <hr />
         </Card>
       </Container>
     </>
