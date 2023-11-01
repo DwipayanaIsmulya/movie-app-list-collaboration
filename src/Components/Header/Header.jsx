@@ -66,7 +66,7 @@ function Header() {
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand`} />
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand`}
-              aria-labelledb
+              aria-labelledby
               y={`offcanvasNavbarLabel-expand`}
               placement="end"
             >
@@ -114,10 +114,7 @@ function Header() {
                         title={
                           user ? (
                             <>
-                              <BsPersonCircle
-                                className="me-1"
-                                style={{ fontSize: "20px" }}
-                              />
+                              <BsPersonCircle className="me-1" style={{ fontSize: "20px" }} />
                               {user.name}
                             </>
                           ) : (

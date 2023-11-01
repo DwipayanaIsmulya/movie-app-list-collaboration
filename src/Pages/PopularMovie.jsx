@@ -1,13 +1,17 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import OwlCarousel from "react-owl-carousel";
 import { Spinner, Container, Col, Row } from "react-bootstrap";
 import { BsArrowRight } from "react-icons/bs";
 import MovieCard from "../Components/Home-2/MovieCard";
+import { useDispatch, useSelector } from "react-redux";
+import { getPopularMovies } from "../redux/actions/movieActions";
 
 function PopularMovie() {
-  const [popularMovies, setPopularMovies] = useState([]);
+  const dispatch = useDispatch();
+
+  const { popular } = useSelector((state) => state.movie);
+
   const [errors, setErrors] = useState({
     isError: false,
     message: null,
@@ -49,53 +53,14 @@ function PopularMovie() {
   };
 
   useEffect(() => {
-    const getPopularMovies = async () => {
-      try {
-        // Get token from local storage
-        const token = localStorage.getItem("token");
-
-        // If the token is not exist in the local storage
-        if (!token) return;
-
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL}/api/v1/movie/popular`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        const { data } = response.data;
-
-        setPopularMovies(data);
-        setErrors({ ...errors, isError: false });
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          setErrors({
-            ...errors,
-            isError: true,
-            message: error?.response?.data?.message || error?.message,
-          });
-          return;
-        }
-
-        alert(error?.message);
-        setErrors({
-          ...errors,
-          isError: true,
-          message: error?.message,
-        });
-      }
-    };
-
-    getPopularMovies();
+    dispatch(getPopularMovies(setErrors, errors));
   }, []);
 
   if (errors.isError) {
     return <h1>{errors.message}</h1>;
   }
 
-  if (popularMovies.length === 0) {
+  if (popular.length === 0) {
     return (
       <div className="d-flex flex-row justify-content-center align-items-center vh-100">
         <Spinner animation="border" role="status">
@@ -105,14 +70,14 @@ function PopularMovie() {
     );
   }
 
+  // console.log(popular);
+
   return (
     <>
       <Container fluid className="mt-5">
         <Row>
           <Col>
-            <h2 style={{ fontWeight: 800, marginTop: "50px" }}>
-              Popular Movies
-            </h2>
+            <h2 style={{ fontWeight: 800, marginTop: "50px" }}>Popular Movies</h2>
           </Col>
           <Col className="d-flex justify-content-end align-items-end">
             <Link
@@ -132,7 +97,7 @@ function PopularMovie() {
           // navClass={styles[["owl-prev", "owl-next"]]}
           {...options}
         >
-          {popularMovies.map((movie) => (
+          {popular.map((movie) => (
             <MovieCard
               key={movie.id}
               id={movie.id}
