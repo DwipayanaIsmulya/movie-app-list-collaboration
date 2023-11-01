@@ -1,7 +1,7 @@
 import { useGoogleLogin } from "@react-oauth/google";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { registerLoginWithGoogleAction } from "../../redux/actions/authActions";
+import { registerLoginWithGoogleAction } from "../../redux/actions/googleActions";
 import { Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 

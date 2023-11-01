@@ -15,7 +15,7 @@ import GoogleLogin from "../Components/Login/GoogleLogin";
 import Particle from "../Components/Particles/Particle";
 import styles from "../Components/Login/styles.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { login } from "../redux/actions/authActions";
+import { login } from "../redux/actions/loginActions";
 import { useDispatch } from "react-redux";
 
 const Login = () => {
