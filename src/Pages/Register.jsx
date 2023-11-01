@@ -4,7 +4,7 @@ import { Form, Button, Container, Card, Row, Col } from "react-bootstrap";
 import styles from "../Components/Login/styles.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { register } from "../redux/actions/authActions";
+import { register } from "../redux/actions/registerActions";
 
 const Register = () => {
   const navigate = useNavigate();
