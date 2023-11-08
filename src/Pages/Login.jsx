@@ -68,6 +68,7 @@ const Login = () => {
                   <span style={{ color: "	#c1071e" }}>login information</span> to
                   Access more Movies.
                 </h5>
+                <h5>This is staging.</h5>
               </Card.Body>
             </Col>
             <Col>
