@@ -45,7 +45,7 @@ const AllMovies = () => {
             <Col key={movie.id}>
               <MovieCard
                 id={movie.id}
-                imageURL={import.meta.env.VITE_API_IMG_URL + movie?.backdrop_path}
+                imageURL={import.meta.env.VITE_API_IMG_URL + movie?.poster_path}
                 // title={movie.title}
               />
             </Col>
