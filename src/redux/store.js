@@ -7,6 +7,6 @@ export default configureStore({
   reducer: rootReducers,
   // devTools: import.meta.env.MODE === "development",
   // devTools: import.meta.env.MODE === "development",
-  devTools: import.meta.env.MODE !== "production",
+  devTools: import.meta.env.VITE_MODE !== "production",
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
 });
